@@ -2,6 +2,7 @@ from assimilator.core.services import CRUDService
 from fastapi import FastAPI, Depends
 
 from dependencies import get_crud
+from schema import UserSchema
 
 app = FastAPI()
 
@@ -17,15 +18,21 @@ async def get_user(id: int, crud: CRUDService = Depends(get_crud)):
 
 
 @app.post('/users')
-async def create_user():
-    pass
+async def create_user(
+        user: UserSchema, crud: CRUDService = Depends(get_crud)
+):
+    return crud.create(user.dict())
 
 
 @app.delete('/users/{id}')
-async def list_users(id: int):
-    pass
+async def delete_user(id: int, crud: CRUDService = Depends(get_crud)):
+    return crud.delete(id=id)
 
 
 @app.put('/users/{id}')
-async def update_user(id: int):
-    pass
+async def update_user(
+        id: int,
+        user_data: UserSchema,
+        crud: CRUDService = Depends(get_crud)
+):
+    return crud.update(id=id, user_data=user_data.dict())
