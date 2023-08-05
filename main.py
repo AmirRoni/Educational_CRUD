@@ -1,18 +1,19 @@
-from fasyapi import FastAPI
+from assimilator.core.services import CRUDService
+from fastapi import FastAPI, Depends
 
-
+from dependencies import get_crud
 
 app = FastAPI()
 
 
 @app.get('/users')
-async def list_users():
-    pass
+async def list_users(crud: CRUDService = Depends(get_crud)):
+    return crud.list()
 
 
 @app.get('/users/{id}')
-async def get_user(id: int):
-    pass
+async def get_user(id: int, crud: CRUDService = Depends(get_crud)):
+    return crud.get(id=id)
 
 
 @app.post('/users')

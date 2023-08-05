@@ -1,4 +1,4 @@
-from sqlalchemy import create_engine, Table, Column, String, Integer
+from sqlalchemy import create_engine, Table, Column, String, Integer, Float
 from sqlalchemy.orm import registry
 
 engine = create_engine("sqlite:///:memory:")
